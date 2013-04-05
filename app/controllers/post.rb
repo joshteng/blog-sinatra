@@ -30,7 +30,7 @@ namespace '/posts' do
     @post = Post.new(params[:post])
 
     tag_ids = params[:tag_ids] || []
-    tag_ids << create_new_tag(params[:new_tag]).id
+    tag_ids = create_new_tag(tag_ids, params[:new_tag])
     append_tags(@post, tag_ids)
 
     if @post.save
@@ -47,7 +47,7 @@ namespace '/posts' do
     @post.update_attributes(params[:post])
 
     tag_ids = params[:tag_ids] || []
-    tag_ids << create_new_tag(params[:new_tag]).id
+    tag_ids = create_new_tag(tag_ids, params[:new_tag])
     append_tags(@post, tag_ids)
 
     redirect "/posts/#{@post.id}"
@@ -62,10 +62,12 @@ namespace '/posts' do
 
 end
 
-def create_new_tag(tag_title)
-  puts "fweffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-  puts tag_title
-  Tag.create(title: tag_title) unless tag_title.empty?
+
+
+####To move these methods into the model
+def create_new_tag(tag_ids, tag_title)
+  tag_ids << Tag.create(title: tag_title).id unless tag_title.empty?
+  tag_ids
 end
 
 def append_tags(post, tag_ids)
