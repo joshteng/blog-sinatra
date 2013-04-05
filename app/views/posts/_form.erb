@@ -1,0 +1,28 @@
+<% if @post %>
+  <form name="post" action="/posts/<%= @post.id %>" method="post">
+    <input name="_method" value="PUT" type="hidden">
+    <input type="text" name="post[title]" value="<%= @post.title %>">
+    <textarea name="post[body]"><%= @post.body %></textarea>
+
+    <p>Choose tags:</p>
+    <% @tags.each do |tag| %>
+     <input type="checkbox" name="tag_ids[]" value="<%= tag.id %>"><%= tag.title %><br>
+    <% end %>
+    <input type="text" name="new_tag" placeholder="enter a new tag">
+
+    <input type="submit" value="edit post">
+  </form>
+<% else %>
+  <form name="post" action="/posts" method="post">
+    <input type="text" name="post[title]" placeholder="post title">
+    <textarea name="post[body]"></textarea>
+    
+    <% @tags.each do |tag| %>
+     <input type="checkbox" name="tag_ids[]" value="<%= tag.id %>"><%= tag.title %><br>
+    <% end %>
+
+    <input type="text" name="new_tag" placeholder="enter a new tag">
+
+    <input type="submit" value="make new post">
+  </form>
+<% end %>

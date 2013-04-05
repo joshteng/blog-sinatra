@@ -1,0 +1,17 @@
+<div class="posts">
+  <% @posts.each do |p| %>
+    <div class="post">
+      <div class="post-headers">
+        <h2 class="tag-title"><a href="/posts/<%= p.id %>"><%= p.title %></a></h2>
+
+        <ul class="tags">
+          <%= p.tags.map { |t| "<a href='/posts?tag=#{t.id}'>#{t.title}</a>" }.join("") %>
+        </ul>
+      </div>
+
+      <div class="post-body-snippet">
+        <p><%= p.body[0..800] %>.... <a class="read-more" href="/posts/<%= p.id %>">read more</a></p>
+      </div>
+    </div>
+  <% end %>
+</div><!-- end .posts -->
